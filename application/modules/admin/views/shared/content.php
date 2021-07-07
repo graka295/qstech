@@ -83,6 +83,32 @@
     <script src="<?= base_url(); ?>assets/custom/js/custom.js"></script>
     <script>
         $(document).ready(function() {
+            var url = window.location + "";
+            var path = url.replace(window.location.protocol + "//" + window.location.host + "/", "");
+            var element = $('ul.menu a').filter(function() {
+                return url.includes(this.href) || path.includes(this.href); // || url.href.indexOf(this.href) === 0;
+            });
+            console.log(element[0])
+            $(element[0]).parentsUntil(".menu").each(function(index) {
+                if ($(this).is("li")){
+                    $(this).addClass("active")
+                }
+                if ($(this).is("ul")){
+                    $(this).addClass("active")
+                }
+                // if ($(this).is("li") && $(this).children("a").length !== 0) {
+                //     $(this).children("a").addClass("active");
+                //     $(this).parent("ul.menu").length === 0 ?
+                //         $(this).addClass("active") :
+                //         $(this).addClass("selected");
+                // } else if (!$(this).is("ul") && $(this).children("a").length === 0) {
+                //     $(this).addClass("selected");
+
+                // } else if ($(this).is("ul")) {
+                //     $(this).addClass('in');
+                // }
+            });
+            element.addClass("active");
             $('.dropify').dropify();
             $("#btn-logout").click(function() {
                 Swal.fire({
