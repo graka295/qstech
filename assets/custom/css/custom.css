@@ -1,0 +1,38 @@
+.swal2-popup {
+	width: 400px !important
+}
+
+.frm {
+	border-radius: 0px !important;
+}
+
+.sidebar-link {
+	text-decoration: none !important;
+}
+
+.table.dataTable thead {
+	background-color: #6c757c;
+	color: white;
+}
+
+@media screen and (max-width: 767px) {
+
+	.dataTables_info,
+	.dataTables_paginate,
+	.dataTables_length,
+	.dataTables_filter {
+		text-align: right !important;
+	}
+}
+
+.dropify-wrapper .dropify-message span.file-icon {
+	font-size: 26px !important;
+	color: #CCC !important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+	margin: 2px 0;
+	white-space: nowrap;
+	justify-content: flex-end;
+	margin-top: 10px !important;
+}

@@ -1,0 +1,12 @@
+*******************
+BASE CODEIGNITER CI
+*******************
+
+- LOGIN
+- CRUD ADMIN
+- CHANGE PROFILE
+- FORGOT PASSWORD
+- CHANGE PASSWORD
+
+- CI-3
+- HMVC - CI
