@@ -138,7 +138,6 @@ class Food extends ADMIN_Controller
         $user["deleted_by"] = $admin["id"];
         $user["deleted_at"] = date('Y-m-d H:i:s');
         $id = $this->MFood->save($id, $user);
-        $this->MAdmin->deleteByID($id);
         if (!$id) {
             show_error("Error delete food");
         }
