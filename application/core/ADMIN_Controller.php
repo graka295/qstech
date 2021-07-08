@@ -9,6 +9,7 @@ class ADMIN_Controller extends MX_Controller
 		$this->load->model("Model_admin", "MAdmin");
 		$this->load->model("Model_food", "MFood");
 		$this->load->model("Model_table", "MTable");
+		$this->load->model("Model_trx", "MTrx");
 		$user = $this->session->userdata('admin');
 		if ($user == null && $user['level'] != "admin") {
 			redirect("admin/auth/logout");
