@@ -20,6 +20,7 @@
     <link href="<?= base_url(); ?>assets/custom/vendor/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets/custom/vendor/dropify/dropify.min.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets/custom/vendor/bootstrap4-toggle/bootstrap4-toggle.min.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>/assets/custom/vendor/cropper.min/cropper.min.css" rel="stylesheet">   
     <script src="<?= base_url("assets/admin/") ?>assets/vendors/jquery/jquery.min.js"></script>
 </head>
 
@@ -80,6 +81,7 @@
     <script src="<?= base_url(); ?>assets/custom/vendor/datatable/datatables.min.js"></script>
     <script src="<?= base_url(); ?>assets/custom/vendor/dropify/dropify.min.js"></script>
     <script src="<?= base_url(); ?>assets/custom/vendor/bootstrap4-toggle/bootstrap4-toggle.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/custom/vendor/cropper.min/cropper.min.js"></script>
     <script src="<?= base_url(); ?>assets/custom/js/custom.js"></script>
     <script>
         $(document).ready(function() {
@@ -88,7 +90,7 @@
             var element = $('ul.menu a').filter(function() {
                 return url.includes(this.href) || path.includes(this.href); // || url.href.indexOf(this.href) === 0;
             });
-            console.log(element[0])
+            // document.querySelector('.sidebar-item.active').scrollIntoView(false)
             $(element[0]).parentsUntil(".menu").each(function(index) {
                 if ($(this).is("li")){
                     $(this).addClass("active")

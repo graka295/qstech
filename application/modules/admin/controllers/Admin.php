@@ -117,12 +117,6 @@ class Admin extends ADMIN_Controller
 			show_404();
 		}
 	}
-	public function delete()
-	{
-		$id = $this->input->get('id');
-		$this->MAdmin->deleteByID($id);
-		redirect('admin/list-admin');
-	}
 	public function update()
 	{
 		$id = $this->input->get('id');
@@ -208,5 +202,11 @@ class Admin extends ADMIN_Controller
 			return false;
 		}
 		echo json_encode($json);
+	}
+	public function delete()
+	{
+		$id = $this->input->get('id');
+		$this->MAdmin->deleteByID($id);
+		redirect('admin/list-admin');
 	}
 }
