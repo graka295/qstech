@@ -20,7 +20,7 @@
     <link href="<?= base_url(); ?>assets/custom/vendor/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets/custom/vendor/dropify/dropify.min.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets/custom/vendor/bootstrap4-toggle/bootstrap4-toggle.min.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>/assets/custom/vendor/cropper.min/cropper.min.css" rel="stylesheet">   
+    <link href="<?= base_url(); ?>/assets/custom/vendor/cropper.min/cropper.min.css" rel="stylesheet">
     <script src="<?= base_url("assets/admin/") ?>assets/vendors/jquery/jquery.min.js"></script>
 </head>
 
@@ -92,10 +92,10 @@
             });
             // document.querySelector('.sidebar-item.active').scrollIntoView(false)
             $(element[0]).parentsUntil(".menu").each(function(index) {
-                if ($(this).is("li")){
+                if ($(this).is("li")) {
                     $(this).addClass("active")
                 }
-                if ($(this).is("ul")){
+                if ($(this).is("ul")) {
                     $(this).addClass("active")
                 }
                 // if ($(this).is("li") && $(this).children("a").length !== 0) {
@@ -132,5 +132,18 @@
         }
     </style>
 </body>
+<!-- <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAZseQFJlNanx2Onq6BIn8dnNijQqPUAoo",
+        authDomain: "qstech-7fe08.firebaseapp.com",
+        projectId: "qstech-7fe08",
+        storageBucket: "qstech-7fe08.appspot.com",
+        messagingSenderId: "79164655702",
+        appId: "1:79164655702:web:89523210aa08af9c6c93f7",
+        measurementId: "G-GYELT24XB9"
+    };
+    firebase.initializeApp(config);
+</script> -->
 
 </html>

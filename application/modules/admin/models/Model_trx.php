@@ -88,10 +88,10 @@ class Model_trx extends CI_Model
             $transactionOrderS["id_trx"] = $transaction_id;
             // $transactionOrder = array_push($transactionOrder, $transactionOrderS);
             $this->db->insert('transaction_order', $transactionOrderS);
-            $idOrder = array_push($idOrder, $val['id']);
+            array_push($idOrder, $val['id']);
+            $this->db->where_in("id", $val['id']);
+            $this->db->update("order", array("is_paid" => true));
         }
-        $this->db->where_in("id", $idOrder);
-        $this->db->update("order", array("is_paid" => true));
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE) {
             return 0;

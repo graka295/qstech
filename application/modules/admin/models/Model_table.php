@@ -82,7 +82,6 @@ class Model_table extends CI_Model
     {
         $this->db->select('*')
             ->from('table')
-            ->where('is_active', true)
             ->where('id', $id)
             ->where('deleted_at is null');
         return $this->db->get()->row();
@@ -91,7 +90,6 @@ class Model_table extends CI_Model
     {
         $this->db->select('*')
             ->from('table')
-            ->where('is_active', true)
             ->where('name', $name)
             ->where('deleted_at is null');
         return $this->db->get()->row();

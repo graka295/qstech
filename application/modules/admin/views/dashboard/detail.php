@@ -231,6 +231,11 @@
                     name: "total"
                 },
                 {
+                    title: "Note",
+                    data: "note",
+                    name: "note"
+                },
+                {
                     title: "Ready served",
                     data: null,
                     orderable: false,

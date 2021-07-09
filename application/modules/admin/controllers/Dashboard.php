@@ -87,9 +87,9 @@ class Dashboard extends ADMIN_Controller
 	public function payment()
 	{
 		$user["id_table"] = $this->input->post("id_table");
-		$user["total"] = $this->input->post("id_table");
-		$user["money_paid"] = $this->input->post("id_table");
-		$user["money_changes"] = $this->input->post("id_table");
+		$user["total"] = $this->input->post("total");
+		$user["money_paid"] = $this->input->post("money_paid");
+		$user["money_changes"] = $this->input->post("money_changes");
 		$admin = $this->session->userdata("admin");
 		$user["created_by"] = $admin["id"];
 		$user["created_at"] = date('Y-m-d H:i:s');

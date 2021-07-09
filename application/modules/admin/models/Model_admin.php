@@ -11,7 +11,6 @@ class Model_admin extends CI_Model
   {
     $this->db->select('*')
       ->from('admin')
-      ->where('is_active', true)
       ->where('email', $email);
     return $this->db->get()->row();
   }
@@ -63,7 +62,6 @@ class Model_admin extends CI_Model
   {
     $this->db->select('*')
       ->from('admin')
-      ->where('is_active', true)
       ->where('id', $id);
     return $this->db->get()->row();
   }
