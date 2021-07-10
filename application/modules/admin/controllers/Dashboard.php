@@ -103,4 +103,27 @@ class Dashboard extends ADMIN_Controller
 		$json = array('message' => array(), 'success' => true);
 		echo json_encode($json);
 	}
+	public function readAllMessage()
+	{
+		$id = $this->MMessage->readAll();
+		$json = array('message' => array(), 'success' => true);
+		if (!$id) {
+			$json["message"] = $this->lang->line("response_failed");
+			$json["success"] = false;
+			echo json_encode($json);
+			return false;
+		}
+		echo json_encode($json);
+	}
+	public function saveToken()
+	{
+		$token = $this->input->post("token");
+		$dataToken = $this->MToken->getByToken($token);
+		if ($dataToken == null) {
+			$dataSave["value"] = $token;
+			$this->MToken->save(0, $dataSave);
+		}
+		$json = array('message' => array(), 'success' => true);
+		echo json_encode($json);
+	}
 }

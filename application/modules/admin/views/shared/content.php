@@ -75,6 +75,7 @@
     <script src="<?= base_url('assets/admin/') ?>assets/js/bootstrap.bundle.min.js"></script>
 
     <script src="<?= base_url('assets/admin/') ?>assets/js/main.js"></script>
+    <script src="<?= base_url(); ?>assets/custom/vendor/qrcode/jquery.classyqr.min.js"></script>
     <script src="<?= base_url(); ?>assets/custom/vendor/jquery-validation-master/jquery.validate.js"></script>
     <script src="<?= base_url(); ?>assets/custom/vendor/sweetalert2/sweetalert2@10.js"></script>
     <script src="<?= base_url(); ?>assets/custom/vendor/iziToast/iziToast.min.js"></script>
@@ -84,6 +85,7 @@
     <script src="<?= base_url(); ?>/assets/custom/vendor/cropper.min/cropper.min.js"></script>
     <script src="<?= base_url(); ?>assets/custom/js/custom.js"></script>
     <script>
+        var messageCount = <?= $messageCount ?>;
         $(document).ready(function() {
             var url = window.location + "";
             var path = url.replace(window.location.protocol + "//" + window.location.host + "/", "");
@@ -123,6 +125,40 @@
                     }
                 })
             })
+            $('#myDropdown').on('hide.bs.dropdown', function() {
+                $(".not-read-message").remove();
+                messageCount = 0;
+            })
+            $('#myDropdown').on('show.bs.dropdown', function() {
+                $.ajax({
+                    // data: data,
+                    url: '<?= site_url("admin/dashboard/readAllMessage") ?>',
+                    type: "POST",
+                    dataType: 'json',
+                    success: function(e) {
+                        // if (!e.success) {
+                        //     swal.close();
+                        //     e.message.map(function(ex) {
+                        //         iziToast.warning({
+                        //             title: 'Info',
+                        //             message: ex,
+                        //             position: 'topRight'
+                        //         });
+                        //     })
+                        // } else {
+                        $("#badgeCount").remove();
+                        // }
+                    },
+                    beforeSend: function() {},
+                    error: function(e) {
+                        // iziToast.error({
+                        //     title: 'Warning',
+                        //     message: "Bad Request",
+                        //     position: 'topRight'
+                        // });
+                    }
+                });
+            })
         })
     </script>
     <style>
@@ -130,11 +166,29 @@
             height: 4.2rem;
             padding-left: 13px;
         }
+
+        .dropdown-menu {
+            max-height: 280px;
+            overflow-y: auto;
+        }
     </style>
 </body>
-<!-- <script>
+<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+<script>
     // Initialize Firebase
-    var config = {
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional    
+    const firebaseConfig = {
         apiKey: "AIzaSyAZseQFJlNanx2Onq6BIn8dnNijQqPUAoo",
         authDomain: "qstech-7fe08.firebaseapp.com",
         projectId: "qstech-7fe08",
@@ -143,7 +197,63 @@
         appId: "1:79164655702:web:89523210aa08af9c6c93f7",
         measurementId: "G-GYELT24XB9"
     };
-    firebase.initializeApp(config);
-</script> -->
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    messaging.getToken({
+        vapidKey: 'BHM7uXt7LM25OlJcV7Whb8MMgdLvARaaYz6jFmWUu4MU-2gi-K9K-DLiyeWtcnaj4tJH3QL74ztv0zcpVxgM6lI'
+    }).then((currentToken) => {
+        if (currentToken) {
+            console.log(currentToken)
+            $.ajax({
+                data: {
+                    token: currentToken,
+                },
+                url: '<?= site_url("admin/dashboard/saveToken") ?>',
+                type: "POST",
+                dataType: 'json',
+                success: function(e) {},
+                beforeSend: function() {},
+                error: function(e) {}
+            });
+            // Send the token to your server and update the UI if necessary
+            messaging.onMessage(function(payLoad) {
+                console.log("Message Received");
+                console.log(payLoad);
+                notificationTitle = payLoad.notification.title;
+                notificationOptions = {
+                    body: payLoad.notification.body,
+                    // icon: payLoad.notification.icon,
+                };
+                messageCount += 1
+                if (messageCount == 1) {
+                    $("#divbadgeCount").append('<span class="badge bg-primary" id="badgeCount">' + messageCount + '</span>');
+                } else {
+                    $("#divbadgeCount").html('<span class="badge bg-primary" id="badgeCount">' + messageCount + '</span>');
+                }
+                var notif = ' <li>' +
+                    '<a href="<?= site_url('/admin/dashboard') ?>" class="dropdown-item">' +
+                    '<div>' +
+                    '<h6><span class="text-danger not-read-message">* </span>' + payLoad.notification.body + '</h6>' +
+                    '<p class="text-subtitle text-muted">' +
+                    payLoad.data.time +
+                    '</p>' +
+                    '</div>' +
+                    '</a>' +
+                    '</li>'
+                $("#list-notif").prepend(notif)
+                var notification = new Notification(notificationTitle, notificationOptions);
+            });
+            // ...
+        } else {
+            // Show permission request UI
+            console.log('No registration token available. Request permission to generate one.');
+            // ...
+        }
+    }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+        // ...
+    });
+</script>
 
 </html>

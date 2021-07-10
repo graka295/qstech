@@ -44,13 +44,23 @@
                                     <div class="row menu">
                                         <div class="col-md-8 col-sm-7">
                                             <h5><?= $food['name'] ?></h5>
+                                            <?php if ($food["recommended"] == 1) { ?>
+                                                <span class='bi bi-star text-warning'></span>
+                                            <?php } ?>
                                             <h6>Rp. <?= number_format($food['price'], 0, ',', '.'); ?></h6>
                                             <p class="text-subtitle text-muted">
                                                 <?= $food['desc'] ?>
                                             </p>
                                         </div>
                                         <div class="col-md-4 col-sm-5 text-center">
-                                            <img class="rounded img-fluid" src="<?= base_url() ?>/<?= PATH_IMAGE_PRODUCT ?><?= $food['photo'] ?>">
+                                            <img class="rounded img-fluid mb-2 image-preview" src="<?= base_url() ?>/<?= PATH_IMAGE_PRODUCT ?><?= $food['photo'] ?>">
+                                            <div id="list-image">
+                                                <?php foreach ($food['photoFood'] as $vals) { ?>
+                                                    <div class="product-image">
+                                                        <img src="<?= base_url() ?>/<?= PATH_IMAGE_PRODUCT ?><?= $vals['name'] ?>">
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12 menu-option menu-option-<?= $food['id'] ?>">
@@ -174,7 +184,7 @@
                 </div>
                 <div class="modal-footer">
                     <span style="width: 60%;" class="text-left">
-                        <h5>TOTAL : <span id="total-order">10000-</span></h5>
+                        <h5>TOTAL : <span id="total-order">0</span></h5>
                     </span>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="orderFood">PESAN</button>
@@ -185,6 +195,40 @@
     <script src="<?= base_url(); ?>assets/custom/vendor/jquery-validation-master/jquery.validate.js"></script>
     <script src="<?= base_url(); ?>assets/custom/vendor/sweetalert2/sweetalert2@10.js"></script>
     <script src="<?= base_url(); ?>assets/custom/js/custom.js"></script>
+    <style type="text/css">
+        .image-preview {
+            max-width: 180px;
+        }
+
+        #list-image {
+            display: flex;
+            width: 100%;
+        }
+
+        .product-image:not(:first-child) {
+            margin-left: 5px;
+        }
+
+        .product-image {
+            max-width: 50px;
+            border-color: #414141;
+            border-width: 1px;
+            border-style: solid;
+            cursor: pointer;
+        }
+
+        .product-image-focus {
+            border-color: #8c3952 !important;
+        }
+
+        .product-image>img {
+            width: 100%;
+        }
+
+        .default-image {
+            cursor: pointer;
+        }
+    </style>
     <style>
         .menu {
             border-style: dotted;
@@ -204,6 +248,9 @@
         var orderData = [];
         var myModal, orderModal;
         $(document).ready(function() {
+            $(".product-image").click(function(e) {
+                focusImagePreview($(this))
+            })
             myModal = new bootstrap.Modal(document.getElementById('qtyModal'), {
                 keyboard: false
             })
@@ -213,7 +260,7 @@
             $('#orderFood').click(function(e) {
                 $.ajax({
                     data: {
-                        idTable:'<?= $table->id; ?>',
+                        idTable: '<?= $table->id; ?>',
                         orderData: orderData,
                     },
                     url: '<?= site_url("frontend/order/orderFood") ?>',
@@ -337,6 +384,15 @@
             $("#note-food").val(orderData[objIndex].note);
             $("#note-id").val(id)
             myModal.show()
+        }
+
+        function focusImagePreview(e) {
+            $(".product-image").removeClass("product-image-focus")
+            $(e).addClass("product-image-focus")
+            var images = $(e).children("img").attr('src');
+            $(e).parent().parent().children(".image-preview").attr('src', images);
+            $(e).parent().parent().children(".image-preview").removeClass("default-image")
+
         }
     </script>
 </body>

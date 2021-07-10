@@ -15,6 +15,15 @@ class Model_table extends CI_Model
             ->where('deleted_at is null');
         return $this->db->get()->row();
     }
+    function getById($id)
+    {
+        $this->db->select('*')
+            ->from('table')
+            ->where('is_active', true)
+            ->where('id', $id)
+            ->where('deleted_at is null');
+        return $this->db->get()->row();
+    }
     public function getOrderTable($idTable)
     {
         $this->db->select("*");

@@ -10,6 +10,8 @@ class ADMIN_Controller extends MX_Controller
 		$this->load->model("Model_food", "MFood");
 		$this->load->model("Model_table", "MTable");
 		$this->load->model("Model_trx", "MTrx");
+		$this->load->model("Model_token", "MToken");
+		$this->load->model("Model_message", "MMessage");
 		$user = $this->session->userdata('admin');
 		if ($user == null && $user['level'] != "admin") {
 			redirect("admin/auth/logout");
@@ -31,6 +33,8 @@ class ADMIN_Controller extends MX_Controller
 	}
 	function template($content, $data = null)
 	{
+		$data['message'] = $this->MMessage->binding();
+		$data['messageCount'] = $this->MMessage->count();
 		$data['user'] = $this->session->userdata('admin');
 		$data['_content'] = $this->load->view($content, $data, true);
 		$data['_side_menu'] = $this->load->view('shared/sidebar', $data, true);

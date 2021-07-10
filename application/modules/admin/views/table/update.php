@@ -31,6 +31,15 @@
                             </div>
                             <div class="card-body">
                                 <div class="container">
+                                    <div class="form-group row">
+                                        <div class="col-lg-12">
+                                            <label class="form-control-label">QR ORDER</label>
+                                            <div>
+                                                <img src="#" id="qr1" alt="" />
+                                            </div>
+                                            <button class="btn" onclick="downloadqr()">Download the QR code</button>
+                                        </div>
+                                    </div>
                                     <form class="form-horizontal" method="POST" id="form-update" action="<?= site_url("admin/table/doUpdate") ?>">
                                         <input type="hidden" id="id" name="id" value="<?= $data->id; ?>">
                                         <div class="form-group row">
@@ -62,7 +71,15 @@
     </section>
 </div>
 <script>
+    function downloadqr() {
+        var src = $("#qr1").attr('src');
+        window.open(src, 'blank');
+    }
     $(document).ready(function() {
+        $("#qr1").ClassyQR({
+            type: 'text',
+            text: '<?= site_url() ?>/frontend/order?codeTable=<?= $data->code ?>'
+        });
         $("#form-update").validate({
             rules: {
                 name: {

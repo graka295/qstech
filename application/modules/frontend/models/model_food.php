@@ -33,4 +33,13 @@ class Model_food extends CI_Model
             ->where('id', $id);
         return $this->db->get()->row();
     }
+    public function getPhotoFood($idPhoto)
+    {
+        $this->db->select('photo_food.id as id,photo_food.id_food as id_food,photo_food.name as name');
+        $this->db->from("photo_food");
+        $this->db->where("id_food", $idPhoto);
+        $this->db->order_by("id", "asc");
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }
