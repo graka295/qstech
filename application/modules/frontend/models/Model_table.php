@@ -51,4 +51,11 @@ class Model_table extends CI_Model
             return  $insert_id;
         }
     }
+    function getAll()
+    {
+        $this->db->select('*,(SELECT COUNT(*) FROM `order` WHERE `order`.`id_table` = table.id AND `is_paid` = false) as table_order')
+            ->from('table');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }
