@@ -24,7 +24,7 @@
             <div class="card">
               <div class="card-header">
                 <div class="float-end">
-                  <!-- <a href="<?= site_url('admin/table/create') ?>" class="btn btn-secondary"><?= $this->lang->line('label_CREATE') ?></a> -->
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">QR LIST TABLE</button>
                 </div>
               </div>
               <div class="card-body order-datatable">
@@ -37,10 +37,39 @@
       </div>
     </div>
   </section>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">QR CODE</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center">
+            <img src="#" id="qr1" alt="" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="downloadqr()">Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
   var grid;
+
+  function downloadqr() {
+    var src = $("#qr1").attr('src');
+    window.open(src, 'blank');
+  }
   $(document).ready(function() {
+    $("#qr1").ClassyQR({
+      type: 'text',
+      text: '<?= site_url() ?>/frontend/table'
+    });
     $(document).on('click.bs.toggle', 'div.change-data', function(e) {
       e.stopImmediatePropagation()
       var checkbox = $(this).children('input[type=checkbox]')
