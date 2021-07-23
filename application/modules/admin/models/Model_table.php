@@ -94,4 +94,11 @@ class Model_table extends CI_Model
             ->where('deleted_at is null');
         return $this->db->get()->row();
     }
+    public function getAll()
+    {
+        $this->db->select('is_active,id,name,code');
+        $this->db->from("table")->where('deleted_at is null');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }

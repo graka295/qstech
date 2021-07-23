@@ -32,7 +32,7 @@
                                 <div class="card-body order-datatable">
                                     <div class="row mb-3">
                                         <div class="col-3">
-                                            <b>Meja</b>
+                                            <b>Table</b>
                                         </div>
                                         <div class="col-6">
                                             <h6 class="text-primary">

@@ -24,14 +24,6 @@ class Model_trx extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-    public function getTotalPrice($idData)
-    {
-        $this->db->select_sum('total');
-        $this->db->from("order");
-        $this->db->where("id_table", $idData);
-        $this->db->where("is_paid", false);
-        return $this->db->get()->row();
-    }
     public function count($where = '', $idData)
     {
         $this->db->from("order");
@@ -45,6 +37,46 @@ class Model_trx extends CI_Model
                 ->group_end();
         }
         return $this->db->count_all_results();
+    }
+    public function bindingReport($where = '', $length = 0, $start = 0, $sort, $type, $idData)
+    {
+        $this->db->select("order.*");
+        $this->db->from("transaction_order");
+        $this->db->join("order","transaction_order.id_order = order.id");
+        $this->db->where("id_trx", $idData);
+        if ($where != '') {
+            $this->db->group_start()
+                ->like('name_food', $where)
+                ->or_like('qty', $where)
+                ->or_like('price', $where)
+                ->group_end();
+        }
+        $this->db->order_by($sort, $type)
+            ->limit($length, $start);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    public function countReport($where = '', $idData)
+    {
+        $this->db->from("transaction_order");
+        $this->db->join("order","transaction_order.id_order = order.id");
+        $this->db->where("id_trx", $idData);
+        if ($where != '') {
+            $this->db->group_start()
+                ->like('name_food', $where)
+                ->or_like('qty', $where)
+                ->or_like('price', $where)
+                ->group_end();
+        }
+        return $this->db->count_all_results();
+    }
+    public function getTotalPrice($idData)
+    {
+        $this->db->select_sum('total');
+        $this->db->from("order");
+        $this->db->where("id_table", $idData);
+        $this->db->where("is_paid", false);
+        return $this->db->get()->row();
     }
     function save($id, $data)
     {

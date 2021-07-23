@@ -13,6 +13,7 @@ class ADMIN_Controller extends MX_Controller
 		$this->load->model("Model_token", "MToken");
 		$this->load->model("Model_message", "MMessage");
 		$this->load->model("Model_suggestions", "MSuggestions");
+		$this->load->model("Model_report", "MReport");
 		$user = $this->session->userdata('admin');
 		if ($user == null && $user['level'] != "admin") {
 			redirect("admin/auth/logout");

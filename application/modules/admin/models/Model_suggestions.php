@@ -8,12 +8,12 @@ class Model_suggestions extends CI_Model
     }
     public function binding($where = '', $length = 0, $start = 0, $sort, $type)
     {
-        $this->db->select("*,date_format(created_at, '%d/%m/%Y %H:%i') date_format")->from('suggestions');
+        $this->db->select("*,date_format(created_at, '%d/%m/%Y %H:%i') date_format, suggestions.id as id")->from('suggestions');
         if ($where != '') {
             $this->db->group_start()
                 ->like('name', $where)
                 ->or_like('title', $where)
-                ->or_like('date_format', $where)
+                // ->or_like("date_format(created_at, '%d/%m/%Y %H:%i') date_format", $where)
                 ->group_end();
         }
         $this->db->order_by($sort, $type)
@@ -28,7 +28,7 @@ class Model_suggestions extends CI_Model
             $this->db->group_start()
                 ->like('name', $where)
                 ->or_like('title', $where)
-                ->or_like('date_format', $where)
+                // ->or_like("date_format(created_at, '%d/%m/%Y %H:%i') date_format", $where)
                 ->group_end();
         }
         return $this->db->count_all_results();

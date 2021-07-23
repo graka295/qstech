@@ -92,7 +92,7 @@
         $('.custom-toogle').bootstrapToggle();
       },
       columns: [{
-          title: "Meja",
+          title: "Table",
           data: "name",
           name: "name"
         },

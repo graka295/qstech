@@ -9,6 +9,13 @@
     </li>
 
     <li class="sidebar-item">
+        <a href="<?php echo site_url("admin/report") ?>" class='sidebar-link'>
+            <i class="bi bi-bar-chart"></i>
+            <span>Report</span>
+        </a>
+    </li>
+
+    <li class="sidebar-item">
         <a href="<?php echo site_url("admin/suggestions") ?>" class='sidebar-link'>
             <i class="bi bi-chat-dots"></i>
             <span>Suggestions</span>
